@@ -1,28 +1,35 @@
 {
   "expo": {
-    "name": "Native_Menu_Planer",
-    "slug": "Native_Menu_Planer",
+    "name": "Native Menu Planner",
+    "slug": "Native_Menu_Planner",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "scheme": "menu-planner",
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/icons/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.svtroya.menuplanner"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.svtroya.menuplanner"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/icons/logo.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
