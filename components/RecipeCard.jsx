@@ -7,7 +7,7 @@ function RecipeCard({recipe}) {
     <TouchableOpacity
       className='mb-4 rounded-2xl bg-secondary p-4'
       activeOpacity={0.85}
-      onPress={() => {router.push(`/recipes/${recipe.$id}`)}}
+      onPress={() => {router.push(`recipes/${recipe.$id}/ingredients`)}}
     >
       <Text
         className='text-4xl text-textSecondary font-semibold mb-2 capitalize'
