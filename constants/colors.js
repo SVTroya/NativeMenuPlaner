@@ -8,6 +8,7 @@ const border = '#7e8f77'
 const inactiveIcon = '#6b7280'
 const inputBackground = '#eeeeee'
 const placeholder = '#aab9af'
+const backdrop =   '#0000004d'
 
 export default {
   primary,
@@ -19,5 +20,6 @@ export default {
   placeholder,
   textSecondary,
   secondaryLight,
-  listItem
+  listItem,
+  backdrop
 }

@@ -12,7 +12,9 @@ module.exports = {
         input: colors.inputBackground,
         textSecondary: colors.textSecondary,
         secondaryLight: colors.secondaryLight,
-        listItem: colors.listItem
+        listItem: colors.listItem,
+        border: colors.border,
+        backdrop: colors.backdrop
       },
       fontSize: {
         header: ['3rem', '2.8rem']

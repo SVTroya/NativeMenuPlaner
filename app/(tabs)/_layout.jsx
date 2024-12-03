@@ -26,7 +26,7 @@ function TabLayout() {
         }
       }}>
       <Tabs.Screen
-        name='recipesList'
+        name='[query]'
         options={{
           title: 'Cookbook',
           headerShown: false,
@@ -49,21 +49,8 @@ function TabLayout() {
               icon={icons.menu}
               color={color}
               focused={focused}/>)
-
         }}/>
-      <Tabs.Screen
-        name='settings'
-        options={{
-          title: 'Settings',
-          headerShown: false,
-          tabBarIcon: ({color, focused}) => (
-            <TabIcon
-              name='Settings'
-              icon={icons.settings}
-              color={color}
-              focused={focused}/>)
 
-        }}/>
     </Tabs>
   )
 }

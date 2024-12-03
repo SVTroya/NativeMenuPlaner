@@ -9,7 +9,7 @@ function TabIcon({icon, color, name, focused}) {
        source={icon}
        resizeMethod='contain'
        tintColor={color}
-       className='w-6 h-6'/>
+       className='w-7 h-7'/>
      <Text
        className={`${focused ? 'font-semibold' : 'font-normal'} :  text-xs`}
        style={{

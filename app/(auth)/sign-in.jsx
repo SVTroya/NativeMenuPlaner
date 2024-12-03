@@ -68,7 +68,7 @@ function SignIn() {
           <CustomButton
             title='Sin In'
             handlePress={submit}
-            containerStyles='mt-7'
+            containerStyles='mt-7 min-h-16'
             isLoading={isSubmitting}
           />
 

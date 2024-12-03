@@ -35,6 +35,8 @@ function RecipeTabLayout() {
           tabBarInactiveTintColor: colors.inactiveIcon,
           sceneStyle: {
             backgroundColor: colors.secondaryLight,
+            borderTopWidth: 2,
+            borderTopColor: colors.border
           },
           tabBarStyle: {
             backgroundColor: colors.secondaryLight,
@@ -56,7 +58,7 @@ function RecipeTabLayout() {
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 name='Ingredients'
-                icon={icons.book}
+                icon={icons.ingredients}
                 color={color}
                 focused={focused}/>)
 
@@ -70,7 +72,7 @@ function RecipeTabLayout() {
             tabBarIcon: ({color, focused}) => (
               <TabIcon
                 name='Instructions'
-                icon={icons.menu}
+                icon={icons.instructions}
                 color={color}
                 focused={focused}/>)
 
