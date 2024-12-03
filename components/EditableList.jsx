@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, Alert} from 'react-native'
+import {Alert, Image, Text, TouchableOpacity, View} from 'react-native'
 import {ID} from 'react-native-appwrite'
 import {Pressable} from 'expo-router/build/views/Pressable'
 import React, {useState} from 'react'
@@ -6,7 +6,7 @@ import icons from '../constants/icons'
 import colors from '../constants/colors'
 import ItemModal from './ItemModal'
 
-function ListRow({rowData, number, handleEdit/*, handleRemove*/}) {
+function ListRow({rowData, number, handleEdit, handleRemove}) {
   return (
     <View className='w-full mb-2 flex-row gap-1 justify-between'>
       <View className='flex flex-shrink flex-row gap-1'>
@@ -27,7 +27,7 @@ function ListRow({rowData, number, handleEdit/*, handleRemove*/}) {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          /*onPress={() => handleRemove()}*/
+          onPress={() => handleRemove()}
         >
           <Image
             className='w-6 h-6'
@@ -54,32 +54,40 @@ function EditableList({name, data, handleAdd, handleChange, type}) {
     setModalVisible(true)
   }
 
-  function handleListChange(newValue, index) {
+  function handleListItemChange(newValue, index) {
     if (!(index >= 0)) {
       Alert.alert('Can\'t edit value', `Index can't be ${index}`)
       return
     }
-    console.log(handleChange)
 
     const newList = [...data]
     newList[index] = newValue
     const newListObject = name === 'Ingredient' ? {ingredients: newList} : {steps: newList}
-    console.log(newListObject)
+    handleChange(newListObject)
+  }
+
+  function handleListItemRemove(index) {
+    if (!(index >= 0)) {
+      Alert.alert('Can\'t remove value', `Index can't be ${index}`)
+      return
+    }
+
+    const newList = [...data]
+    newList.splice(index, 1)
+    const newListObject = name === 'Ingredient' ? {ingredients: newList} : {steps: newList}
     handleChange(newListObject)
   }
 
   function listMockup() {
-    const list = data.map((item, index) => (
+    return data.map((item, index) => (
       <ListRow
         key={ID.unique()}
         rowData={item}
         number={type === 'numeric' ? index : null}
         handleEdit={() => handleEdit(item, index)}
-        /* handleRemove={}*/
+        handleRemove={() => handleListItemRemove(index)}
       />
     ))
-    console.log(list)
-    return list
   }
 
   return (
@@ -92,7 +100,7 @@ function EditableList({name, data, handleAdd, handleChange, type}) {
             className={`${data.length === 0 ? 'my-2' : 'mt-2'}`}
             onPress={() => setModalVisible(true)}
           >
-            <Text className='text-secondary font-semibold'>+ {name}</Text>
+            <Text className='text-secondary font-semibold w-full'>+ {name}</Text>
           </Pressable>
         </View>
       </View>
@@ -103,7 +111,7 @@ function EditableList({name, data, handleAdd, handleChange, type}) {
         initialValue={modalInitialValue}
         index={modalIndex}
         handleAdd={handleAdd}
-        handleChange={handleListChange}
+        handleChange={handleListItemChange}
         handleClose={() => {
           setModalVisible(!modalVisible)
           setModalInitialValue('')
