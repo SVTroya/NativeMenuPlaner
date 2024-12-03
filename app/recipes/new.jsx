@@ -95,9 +95,13 @@ function New() {
           ?
           (<>
             <Text className='text-base flex-shrink font-semibold mt-6'>Image</Text>
-            <View className='bg-gray-200 rounded-xl border-2 border-gray-400 overflow-hidden'>
+            <TouchableOpacity
+              className='bg-gray-200 rounded-xl border-2 border-gray-400 overflow-hidden'
+              activeOpacity={0.7}
+              onPress={() => openImagePicker()}
+            >
               <Image source={{uri: form.image}} className='w-full h-56' resizeMode='cover'/>
-            </View>
+            </TouchableOpacity>
           </>)
           :
           (<>
@@ -105,7 +109,8 @@ function New() {
             <TouchableOpacity
               className='w-full bg-gray-200 flex justify-center items-center p-2 rounded-xl border-2 border-gray-400'
               activeOpacity={0.7}
-              onPress={() => openImagePicker()}>
+              onPress={() => openImagePicker()}
+            >
               <View className='w-16 h-16 border border-dashed border-gray-800 flex justify-center items-center'>
                 <Image source={icons.upload} className='w-10 h-10' resizeMode='contain'/>
               </View>
