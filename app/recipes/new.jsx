@@ -6,22 +6,39 @@ import {useGlobalContext} from '../../context/GlobalProvider'
 import CustomButton from '../../components/CustomButton'
 import EditableList from '../../components/EditableList'
 import icons from '../../constants/icons'
-import * as DocumentPicker from 'expo-document-picker'
+import * as ImagePicker from 'expo-image-picker'
+import {router} from 'expo-router'
+import {addRecipe} from '../../lib/arrwrite'
 
 function New() {
   const {user} = useGlobalContext()
-  const [form, setForm] = useState({
+  const initialFormData = {
     title: '',
     description: '',
     ingredients: ['Carrot', 'Stir in cilantro, onion, garlic powder, and chicken cubes until combined.', 'In a medium bowl, mash avocado with sour cream and lime juice.'],
     steps: [],
-    image: '',
-    user: user
-  })
+    image: null,
+  }
+  const [form, setForm] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function save() {
+  async function save() {
+    if (!form.title.trim()) return Alert.alert('Title is mandatory', 'Please fill in Title field')
 
+    setIsSubmitting(true)
+
+    try {
+      await addRecipe({...form, user:user.$id})
+      Alert.alert('Recipe saved')
+      router.push('/recipeList')
+    }
+    catch(error) {
+      Alert.alert('Error', error.message)
+    }
+    finally{
+      setForm(initialFormData)
+      setIsSubmitting(false)
+    }
   }
 
   function handleChangeListValue(newListObject) {
@@ -31,13 +48,16 @@ function New() {
   }
 
   async function openImagePicker() {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: ['image/png', 'image/jpg']
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: 'Images',
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     })
 
     if (!result.canceled) {
       setForm((prev) => {
-        return {...prev, image: result.assets[0]?.uri}
+        return {...prev, image: result.assets[0]}
       })
     }
   }
@@ -100,7 +120,7 @@ function New() {
               activeOpacity={0.7}
               onPress={() => openImagePicker()}
             >
-              <Image source={{uri: form.image}} className='w-full h-56' resizeMode='cover'/>
+              <Image source={{uri: form.image.uri}} className='w-full h-56' resizeMode='cover'/>
             </TouchableOpacity>
           </>)
           :
@@ -122,7 +142,6 @@ function New() {
           handlePress={save}
           containerStyles='my-7 min-h-16'
           isLoading={isSubmitting}
-
         />
       </ScrollView>
     </SafeAreaView>
