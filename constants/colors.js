@@ -9,6 +9,7 @@ const inactiveIcon = '#6b7280'
 const inputBackground = '#eeeeee'
 const placeholder = '#aab9af'
 const backdrop =   '#0000004d'
+const remove = '#c80000'
 
 export default {
   primary,
@@ -21,5 +22,6 @@ export default {
   textSecondary,
   secondaryLight,
   listItem,
-  backdrop
+  backdrop,
+  remove
 }

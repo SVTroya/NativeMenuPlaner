@@ -13,6 +13,7 @@ import instructions from '../assets/icons/instructions.png'
 import upload from '../assets/icons/upload.png'
 import edit from '../assets/icons/pencil.png'
 import remove from '../assets/icons/bin.png'
+import leftArrow from '../assets/icons/left-arrow.png'
 
 export default {
   bookmark,
@@ -29,5 +30,6 @@ export default {
   instructions,
   upload,
   edit,
-  remove
+  remove,
+  leftArrow
 }

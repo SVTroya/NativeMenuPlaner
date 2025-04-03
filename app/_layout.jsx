@@ -24,13 +24,13 @@ function RootLayout() {
 
   return (
     <GlobalProvider>
-      <Stack>
-        <Stack.Screen name='index' options={{headerShown: false}}/>
-        <Stack.Screen name='(auth)' options={{headerShown: false}}/>
-        <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
-        <Stack.Screen name='recipes/[id]' options={{headerShown: false}}/>
-        <Stack.Screen name='recipes/new' options={{headerShown: false}}/>
-      </Stack>
+        <Stack>
+          <Stack.Screen name='index' options={{headerShown: false}}/>
+          <Stack.Screen name='(auth)' options={{headerShown: false}}/>
+          <Stack.Screen name='(tabs)' options={{headerShown: false}}/>
+          <Stack.Screen name='recipes/[id]' options={{headerShown: false}}/>
+          <Stack.Screen name='recipes/new' options={{headerShown: false}}/>
+        </Stack>
     </GlobalProvider>
   )
 }
