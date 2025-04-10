@@ -38,7 +38,7 @@ export default function App() {
             handlePress={() => {
               router.push('/sign-in')
             }}
-            containerStyles='w-full mt-7'
+            containerStyles='w-full mt-7 min-h-14'
           />
         </View>
       </ScrollView>

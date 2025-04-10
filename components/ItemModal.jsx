@@ -38,10 +38,12 @@ function ItemModal({name, isVisible, handleAdd, handleChange, handleClose, initi
          <CustomButton
            title={initialValue ? 'Change' : 'Add'}
            handlePress={() => handleConfirm()}
+           containerStyles='min-h-14'
          />
          <CustomButton
            title='Cancel'
            handlePress={() => handleClose()}
+           containerStyles='min-h-14'
          />
        </View>
      </View>

@@ -46,7 +46,6 @@ function ListRow({rowData, number, handleEdit, handleRemove}) {
 function EditableList({name, data, handleAdd, handleChange, type}) {
   const [modalVisible, setModalVisible] = useState(false)
   const [modalInitialValue, setModalInitialValue] = useState('')
-  const [modalIndex, setModalIndex] = useState(-1)
 
   function handleEdit(initialValue, index) {
     setModalInitialValue(initialValue)
@@ -109,7 +108,6 @@ function EditableList({name, data, handleAdd, handleChange, type}) {
         name={name}
         isVisible={modalVisible}
         initialValue={modalInitialValue}
-        index={modalIndex}
         handleAdd={handleAdd}
         handleChange={handleListItemChange}
         handleClose={() => {
