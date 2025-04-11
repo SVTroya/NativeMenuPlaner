@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Text, ScrollView, TouchableOpacity, Image, View, Alert} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
@@ -8,19 +8,37 @@ import EditableList from '../../components/EditableList'
 import icons from '../../constants/icons'
 import * as ImagePicker from 'expo-image-picker'
 import {router} from 'expo-router'
-import {addRecipe} from '../../lib/arrwrite'
+import {addRecipe, changeRecipe} from '../../lib/arrwrite'
+import colors from '../../constants/colors'
+import BackButton from '../../components/BackButton'
 
-function New() {
+function NewEdit({recipe}) {
   const {user} = useGlobalContext()
   const initialFormData = {
     title: '',
     description: '',
-    ingredients: ['Carrot', 'Stir in cilantro, onion, garlic powder, and chicken cubes until combined.', 'In a medium bowl, mash avocado with sour cream and lime juice.'],
+    ingredients: [],
     steps: [],
-    image: null,
+    image: null
   }
   const [form, setForm] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
+  const [imageToDeleteURL, setImageToDeleteURL] = useState(null)
+
+  useEffect(() => {
+    if (recipe && recipe.title) {
+      setForm({
+        $id: recipe.$id,
+        title: recipe.title,
+        description: recipe.description,
+        ingredients: recipe.ingredients,
+        steps: recipe.steps,
+        image: recipe.image
+      })
+      setIsEdit(true)
+    }
+  }, [recipe])
 
   async function save() {
     if (!form.title.trim()) return Alert.alert('Title is mandatory', 'Please fill in Title field')
@@ -28,15 +46,13 @@ function New() {
     setIsSubmitting(true)
 
     try {
-      await addRecipe({...form, user:user.$id})
+      isEdit ? await changeRecipe({...form, user: user.$id}, imageToDeleteURL) : await addRecipe({...form, user: user.$id})
       Alert.alert('Recipe saved')
       router.push('/recipeList')
-    }
-    catch(error) {
+    } catch (error) {
       Alert.alert('Error', error.message)
-    }
-    finally{
-      setForm(initialFormData)
+    } finally {
+      /*      setForm(initialFormData)*/
       setIsSubmitting(false)
     }
   }
@@ -52,10 +68,11 @@ function New() {
       mediaTypes: 'Images',
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 0.3,
+      quality: 0.3
     })
 
     if (!result.canceled) {
+      if (typeof form.image === 'string') setImageToDeleteURL(form.image)
       setForm((prev) => {
         return {...prev, image: result.assets[0]}
       })
@@ -65,6 +82,10 @@ function New() {
   return (
     <SafeAreaView className='h-full w-full bg-primary'>
       <ScrollView className='p-4'>
+        <View
+          className='flex-row h-10 justify-between'>
+          <BackButton color={colors.secondary}/>
+        </View>
         <Text className='text-gray-800 font-semibold text-2xl'>Add New Recipe</Text>
         <FormField
           title='Title'
@@ -120,7 +141,8 @@ function New() {
               activeOpacity={0.7}
               onPress={() => openImagePicker()}
             >
-              <Image source={{uri: form.image.uri}} className='w-full h-56' resizeMode='cover'/>
+              <Image source={{uri: typeof form.image === 'string' ? form.image : form.image.uri}}
+                     className='w-full h-56' resizeMode='cover'/>
             </TouchableOpacity>
           </>)
           :
@@ -148,4 +170,4 @@ function New() {
   )
 }
 
-export default New
+export default NewEdit

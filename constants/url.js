@@ -1,0 +1,1 @@
+export const defaultImageURL = 'https://cloud.appwrite.io/v1/storage/buckets/67600ff0001c31b369e4/files/67f8f2790036614b0a81/view?project=6741f3570015fae7409f&mode=admin'

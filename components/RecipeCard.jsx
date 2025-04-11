@@ -1,8 +1,10 @@
 import React from 'react'
 import {Text, Image, TouchableOpacity} from 'react-native'
 import {router} from 'expo-router'
+import {defaultImageURL} from '../constants/url'
 
 function RecipeCard({recipe}) {
+
   return (
     <TouchableOpacity
       className='mb-4 rounded-2xl bg-secondary p-4'
@@ -14,16 +16,16 @@ function RecipeCard({recipe}) {
         numberOfLines={3}
       >{recipe.title}</Text>
       <Image
-        source={{uri: recipe.image}}
+        source={{uri: recipe.image ? recipe.image : defaultImageURL}}
         resizeMode='cover'
-        className='h-56 w-full mb-2 rounded'
+        className='h-56 w-full rounded'
       />
-      <Text
-        className='text-base text-textSecondary mb-2 text-justify'
+      {recipe.description && <Text
+        className='text-base text-textSecondary mt-2 text-justify'
         numberOfLines={4}
       >
         {recipe.description}
-      </Text>
+      </Text>}
     </TouchableOpacity>
   )
 }

@@ -8,6 +8,8 @@ import useAppwrite from '../../../lib/useAppwrite'
 import {getBaseRecipeInfo, removeRecipeById} from '../../../lib/arrwrite'
 import React, {useState} from 'react'
 import DialogModal from '../../../components/DialogModal'
+import BackButton from '../../../components/BackButton'
+import {defaultImageURL} from '../../../constants/url'
 
 function RecipeTabLayout() {
   const {id} = useLocalSearchParams()
@@ -15,18 +17,21 @@ function RecipeTabLayout() {
 
   const [modalVisible, setModalVisible] = useState(false)
 
-  function handleRemoveClick() {
+  function handleRemove() {
     setModalVisible(true)
   }
 
+  function handleEdit() {
+    router.push(`/recipes/edit/${id}`)
+  }
+
   async function removeRecipe() {
-    try{
+    try {
       await removeRecipeById(id)
       setModalVisible(false)
       router.push('/recipeList')
       Alert.alert('Recipe deleted')
-    }
-    catch(error){
+    } catch (error) {
       Alert.alert('Error', error.message)
     }
   }
@@ -37,23 +42,13 @@ function RecipeTabLayout() {
         <SafeAreaView className='px-4'>
           <View
             className='flex-row h-10 justify-between'>
-            <TouchableOpacity
-              className='w-10 py-2 pr-2'
-              activeOpacity={0.7}
-              onPress={() => router.back()}>
-              <Image
-                className='w-8 h-6'
-                source={icons.leftArrow}
-                tintColor={colors.primary}
-                resizeMethod='contain'
-              />
-            </TouchableOpacity>
+            <BackButton color={colors.primary} />
 
             <View
               className='flex-row'>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => router.back()}
+                onPress={() => handleEdit()}
                 className='p-2'>
                 <Image
                   className='w-6 h-6'
@@ -64,7 +59,7 @@ function RecipeTabLayout() {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => handleRemoveClick()}
+                onPress={() => handleRemove()}
                 className='py-2 pl-2'>
                 <Image
                   className='w-6 h-6'
@@ -80,15 +75,17 @@ function RecipeTabLayout() {
           <Text
             className='text-4xl text-textSecondary text-center font-semibold mb-4 capitalize'>{recipe.title}</Text>
           <Image
-            source={{uri: recipe.image}}
+            source={{uri: recipe.image ? recipe.image : defaultImageURL}}
             resizeMode='cover'
-            className='h-56 w-full mb-2 rounded-2xl'
+            className='h-56 w-full rounded-2xl'
           />
-          <Text
-            className='text-base text-textSecondary text-justify -mb-7'
-          >
-            {recipe.description}
-          </Text>
+          {
+            recipe.description && <Text
+              className='text-base text-textSecondary text-justify mt-2 -mb-7'
+            >
+              {recipe.description}
+            </Text>
+          }
         </SafeAreaView>
 
         <Tabs
@@ -152,7 +149,7 @@ function RecipeTabLayout() {
         handleCancel={() => {
           setModalVisible(!modalVisible)
         }}
-        />
+      />
     </>
   )
 }

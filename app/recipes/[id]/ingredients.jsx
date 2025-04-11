@@ -8,7 +8,7 @@ function Ingredients() {
   const {data: {ingredients}} = useAppwrite(() => getIngredientsList(id))
 
   return (
-      <RecipeTab data={ingredients}/>
+      <RecipeTab tabName='Ingredients' data={ingredients}/>
   )
 }
 

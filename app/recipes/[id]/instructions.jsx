@@ -8,7 +8,7 @@ function Instructions() {
   const {data: {steps}} = useAppwrite(() => getInstructionsList(id))
 
   return (
- <RecipeTab data={steps} type='numeric'/>
+ <RecipeTab tabName='Instructions' data={steps} type='numeric'/>
   )
 }
 
