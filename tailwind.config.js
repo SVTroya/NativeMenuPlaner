@@ -14,7 +14,8 @@ module.exports = {
         secondaryLight: colors.secondaryLight,
         listItem: colors.listItem,
         border: colors.border,
-        backdrop: colors.backdrop
+        backdrop: colors.backdrop,
+        disabled: colors.disabled
       },
       fontSize: {
         header: ['3rem', '2.8rem']

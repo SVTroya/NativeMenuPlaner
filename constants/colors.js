@@ -8,6 +8,7 @@ const border = '#7e8f77'
 const inactiveIcon = '#6b7280'
 const inputBackground = '#eeeeee'
 const placeholder = '#aab9af'
+const disabled = '#d3d3d3'
 const backdrop =   '#0000004d'
 const remove = '#c80000'
 
@@ -23,5 +24,6 @@ export default {
   secondaryLight,
   listItem,
   backdrop,
-  remove
+  remove,
+  disabled
 }

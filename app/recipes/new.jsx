@@ -15,16 +15,17 @@ import BackButton from '../../components/BackButton'
 function NewEdit({recipe}) {
   const {user} = useGlobalContext()
   const initialFormData = {
-    title: '',
-    description: '',
-    ingredients: [],
-    steps: [],
-    image: null
+    title: '', description: '', ingredients: [], steps: [], image: null
   }
   const [form, setForm] = useState(initialFormData)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [imageToDeleteURL, setImageToDeleteURL] = useState(null)
+  const [wasChanged, setWasChanged] = useState(false)
+
+  useEffect(() => {
+    setWasChanged(isFormChanged())
+  }, [form])
 
   useEffect(() => {
     if (recipe && recipe.title) {
@@ -79,8 +80,16 @@ function NewEdit({recipe}) {
     }
   }
 
-  return (
-    <SafeAreaView className='h-full w-full bg-primary'>
+  function isFormChanged() {
+    const initialValue = recipe ?? initialFormData
+    return form.title !== initialValue.title ||
+      form.description !== initialValue.description ||
+      JSON.stringify(form.ingredients) !== JSON.stringify(initialValue.ingredients) ||
+      JSON.stringify(form.steps) !== JSON.stringify(initialValue.steps) ||
+      form.image !== initialValue.image
+  }
+
+  return (<SafeAreaView className='h-full w-full bg-primary'>
       <ScrollView className='p-4'>
         <View
           className='flex-row h-10 justify-between'>
@@ -164,10 +173,10 @@ function NewEdit({recipe}) {
           handlePress={save}
           containerStyles='my-7 min-h-16'
           isLoading={isSubmitting}
+          isDisabled={!wasChanged}
         />
       </ScrollView>
-    </SafeAreaView>
-  )
+    </SafeAreaView>)
 }
 
 export default NewEdit
